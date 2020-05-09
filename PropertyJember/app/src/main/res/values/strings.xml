@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">propertyjember</string>
+
+    <string name="akun">Akun</string>
+    <string name="infosewa">Info Sewa</string>
+    <string name="inbox">Inbox</string>
 </resources>
