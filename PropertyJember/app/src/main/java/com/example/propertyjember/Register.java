@@ -25,8 +25,7 @@ import java.util.Map;
 public class Register extends AppCompatActivity {
 
     // Creating EditText.
-    EditText NIK, NamaLengkap, Alamat, Email, Username, Password ;
-
+    EditText NIK, NamaLengkap, Alamat, No, Email, Username, Password ;
     TextView Login;
 
     // Creating button;
@@ -36,13 +35,12 @@ public class Register extends AppCompatActivity {
     RequestQueue requestQueue;
 
     // Create string variable to hold the EditText Value.
-    String NIKHolder, NamaHolder, AlamatHolder, EmailHolder, UsernameHolder, PasswordHolder ;
+    String NIKHolder, NamaHolder, AlamatHolder, NoHolder, EmailHolder, UsernameHolder, PasswordHolder ;
 
     // Creating Progress dialog.
     ProgressDialog progressDialog;
 
     // Storing server url into String variable.
-    String HttpUrl = "http://192.168.1.106/propertylogin/User_Registration.php"   ;
 
     Boolean CheckEditText ;
 
@@ -55,6 +53,7 @@ public class Register extends AppCompatActivity {
         NIK = (EditText) findViewById(R.id.EditText_NIK);
         NamaLengkap = (EditText) findViewById(R.id.EditText_NamaLengkap);
         Alamat = (EditText) findViewById(R.id.EditText_Alamat);
+        No = (EditText) findViewById(R.id.EditText_No);
         Email = (EditText) findViewById(R.id.EditText_Email);
         Username = (EditText) findViewById(R.id.EditText_Username);
         Password = (EditText) findViewById(R.id.EditText_Password);
@@ -107,7 +106,7 @@ public class Register extends AppCompatActivity {
         progressDialog.show();
 
         // Creating string request with post method.
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, HttpUrl,
+        StringRequest senddata = new StringRequest(Request.Method.POST, ServerApi.URL_REGISTER,
                 new Response.Listener<String>() {
 
                     @Override
@@ -117,7 +116,7 @@ public class Register extends AppCompatActivity {
                         progressDialog.dismiss();
 
                         // Showing Echo Response Message Coming From Server.
-                        Toast.makeText(Register.this, ServerResponse, Toast.LENGTH_LONG).show();
+                        Toast.makeText(Register.this, "Register Success", Toast.LENGTH_LONG).show();
                         finish();
                         Intent intent = new Intent(Register.this, Login.class);
                         startActivity(intent);
@@ -142,9 +141,10 @@ public class Register extends AppCompatActivity {
 
                 // Adding All values to Params.
                 // The firs argument should be same sa your MySQL database table columns.
-                params.put("nik_penyewa", NIKHolder);
-                params.put("nama_penyewa", NamaHolder);
-                params.put("alamat_penyewa", AlamatHolder);
+                params.put("NIK_pengguna", NIKHolder);
+                params.put("nama_pengguna", NamaHolder);
+                params.put("alamat_pengguna", AlamatHolder);
+                params.put("no_pengguna", NoHolder);
                 params.put("email", EmailHolder);
                 params.put("username", UsernameHolder);
                 params.put("password", PasswordHolder);
@@ -158,7 +158,7 @@ public class Register extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(Register.this);
 
         // Adding the StringRequest object into requestQueue.
-        requestQueue.add(stringRequest);
+        requestQueue.add(senddata);
 
     }
 
@@ -169,13 +169,14 @@ public class Register extends AppCompatActivity {
         NIKHolder = NIK.getText().toString().trim();
         NamaHolder = NamaLengkap.getText().toString().trim();
         AlamatHolder = Alamat.getText().toString().trim();
+        NoHolder = No.getText().toString().trim();
         EmailHolder = Email.getText().toString().trim();
         UsernameHolder = Username.getText().toString().trim();
         PasswordHolder = Password.getText().toString().trim();
 
         // Checking whether EditText value is empty or not.
         if(TextUtils.isEmpty(NIKHolder) || TextUtils.isEmpty(NamaHolder) ||
-                TextUtils.isEmpty(AlamatHolder) || TextUtils.isEmpty(EmailHolder) ||
+                TextUtils.isEmpty(AlamatHolder) || TextUtils.isEmpty(NoHolder) || TextUtils.isEmpty(EmailHolder) ||
                 TextUtils.isEmpty(UsernameHolder) || TextUtils.isEmpty(PasswordHolder))
         {
 

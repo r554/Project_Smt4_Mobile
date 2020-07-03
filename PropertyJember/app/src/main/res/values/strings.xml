@@ -4,4 +4,8 @@
     <string name="akun">Akun</string>
     <string name="infosewa">Info Sewa</string>
     <string name="inbox">Inbox</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_transaksi">Dashboard</string>
+    <string name="title_akun">Notifications</string>
 </resources>

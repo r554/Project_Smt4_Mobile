@@ -1,7 +1,7 @@
 package com.example.propertyjember;
 
 public class DataInfosewa {
-    private String jenis, harga, alamat, imgURL;
+    private String nama, harga, alamat, imgURL;
     public String getImgURL(){
         return imgURL;
     }
@@ -20,10 +20,10 @@ public class DataInfosewa {
     public void setAlamat(String alamat) {
         this.alamat = alamat;
     }
-    public String getJenis() {
-        return jenis;
+    public String getNama() {
+        return nama;
     }
-    public void setJenis(String jenis) {
-        this.jenis = jenis;
+    public void setNama(String nama) {
+        this.nama = nama;
     }
 }

@@ -6,12 +6,14 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -19,14 +21,18 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Login extends AppCompatActivity {
 
     // Creating EditText.
-    EditText Username, Password ;
-
+    EditText username, password ;
+    SessionManager sessionManager;
     //Creating TextView
     TextView Register;
 
@@ -43,7 +49,7 @@ public class Login extends AppCompatActivity {
     ProgressDialog progressDialog;
 
     // Storing server url into String variable.
-    String HttpUrl = "http://192.168.1.106/propertylogin/User_Login.php";
+    //public static String URL = ServerApi.URL_LOGIN;
 
     Boolean CheckEditText ;
 
@@ -52,9 +58,10 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Username = (EditText) findViewById(R.id.EditText_Username);
+        username = (EditText) findViewById(R.id.EditText_Username);
 
-        Password = (EditText) findViewById(R.id.EditText_Password);
+        password = (EditText) findViewById(R.id.EditText_Password);
+        sessionManager = new SessionManager(getBaseContext());
         Register = (TextView) findViewById(R.id.textview_register);
         // Assigning ID's to Button.
         LoginButton = (Button) findViewById(R.id.button_login);
@@ -78,8 +85,6 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                CheckEditTextIsEmptyOrNot();
-
                 if(CheckEditText){
 
                     UserLogin();
@@ -87,7 +92,7 @@ public class Login extends AppCompatActivity {
                 }
                 else {
 
-                    Toast.makeText(Login.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Login.this, "Data Tidak Boleh Kosong", Toast.LENGTH_LONG).show();
 
                 }
 
@@ -97,86 +102,59 @@ public class Login extends AppCompatActivity {
     }
 
     public void UserLogin(){
+        StringRequest senddata = new StringRequest(Request.Method.POST, ServerApi.URL_LOGIN, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("login");
+                    if (success.equals("1")) {
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            String nama_pengguna = jsonObject1.getString("nama_pengguna").trim();
+                            String NIK_pengguna = jsonObject1.getString("NIK_pengguna").trim();
+                            String alamat_pengguna = jsonObject1.getString("alamat_pengguna").trim();
+                            String no_pengguna = jsonObject1.getString("no_pengguna");
+                            String email = jsonObject1.getString("email").trim();
+                            String foto_ktp = jsonObject1.getString("foto_ktp").trim();
+                            String foto_diri_dan_ktp = jsonObject1.getString("foto_diri_dan_ktp").trim();
+                            String foto_profil = jsonObject1.getString("foto_profil").trim();
+                            String role = jsonObject1.getString("role").trim();
 
-        // Showing progress dialog at user registration time.
-        progressDialog.setMessage("Please Wait");
-        progressDialog.show();
+                            sessionManager.createSession(NIK_pengguna, nama_pengguna, alamat_pengguna,
+                                    no_pengguna, email, foto_ktp,
+                                    foto_diri_dan_ktp, foto_profil,  username.getText().toString(), password.getText().toString(), role);
 
-        // Creating string request with post method.
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, HttpUrl,
-                new Response.Listener<String>() {
-
-                    @Override
-                    public void onResponse(String ServerResponse) {
-
-                        // Hiding the progress dialog after all task complete.
-                        progressDialog.dismiss();
-                        if (ServerResponse.equalsIgnoreCase("Data Matched")) {
-                            Toast.makeText(Login.this, "Logged In Successfuly", Toast.LENGTH_LONG).show();
-                            finish();
                             Intent intent = new Intent(Login.this, MainActivity.class);
-                            intent.putExtra("UsernameTAG", UsernameHolder);
                             startActivity(intent);
-                        } else {
-                            Toast.makeText(Login.this, ServerResponse, Toast.LENGTH_SHORT).show();
                         }
+                    } else {
+                        Toast.makeText(Login.this, "Data Kosong! ", Toast.LENGTH_SHORT).show();
                     }
-                },
-
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(Login.this, "Error login : " + e.toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        },
                 new Response.ErrorListener() {
                     @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-
-                        // Hiding the progress dialog after all task complete.
-                        progressDialog.dismiss();
-
-                        // Showing error message if something goes wrong.
-                        Toast.makeText(Login.this, volleyError.toString(), Toast.LENGTH_LONG).show();
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Login.this, "Error login : " + error.toString(), Toast.LENGTH_SHORT) .show();
                     }
                 }) {
             @Override
-            protected Map<String, String> getParams() {
-
-                // Creating Map String Params.
-                Map<String, String> params = new HashMap<String, String>();
-
-                // Adding All values to Params.
-                // The firs argument should be same sa your MySQL database table columns.
-                params.put("username", UsernameHolder);
-                params.put("password", PasswordHolder);
-
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("username", username.getText().toString());
+                // sesuaikan dengan $_POST pada PHP
+                params.put("password", password.getText().toString());
                 return params;
             }
-
         };
 
-        // Creating RequestQueue.
-        RequestQueue requestQueue = Volley.newRequestQueue(Login.this);
-
-        // Adding the StringRequest object into requestQueue.
-        requestQueue.add(stringRequest);
-
-    }
-
-
-    public void CheckEditTextIsEmptyOrNot(){
-
-        // Getting values from EditText.
-        UsernameHolder = Username.getText().toString().trim();
-        PasswordHolder = Password.getText().toString().trim();
-
-        // Checking whether EditText value is empty or not.
-        if(TextUtils.isEmpty(UsernameHolder) || TextUtils.isEmpty(PasswordHolder))
-        {
-
-            // If any of EditText is empty then set variable value as False.
-            CheckEditText = false;
-
-        }
-        else {
-
-            // If any of EditText is filled then set variable value as True.
-            CheckEditText = true ;
-        }
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(senddata);
     }
 }

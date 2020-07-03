@@ -30,7 +30,7 @@ public class TabelInfo extends AppCompatActivity {
         // Inflate your row "template" and fill out the fields.
         TableRow row = (TableRow)getLayoutInflater().inflate(R.layout.activity_listinfo, null);
         ((TextView)row.findViewById(R.id.notransaksi)).setText("NO");
-        ((TextView)row.findViewById(R.id.tglpembayaran)).setText("Tanggal Pembayaran");
+        //((TextView)row.findViewById(R.id.tglpembayaran)).setText("Tanggal Pembayaran");
         ((TextView)row.findViewById(R.id.harga)).setText("Harga");
         ((TextView)row.findViewById(R.id.status)).setText("Status");
         tablelayoutid.addView(row);

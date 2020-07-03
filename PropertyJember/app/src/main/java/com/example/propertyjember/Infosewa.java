@@ -60,7 +60,7 @@ public class Infosewa extends AppCompatActivity {
                                     JSONObject dataobj =
                                             dataArray.getJSONObject(i);
 
-                                    dataModel.setJenis(dataobj.getString("jenis"));
+                                    dataModel.setNama(dataobj.getString("jenis"));
 
                                     dataModel.setHarga(dataobj.getString("harga"));
 

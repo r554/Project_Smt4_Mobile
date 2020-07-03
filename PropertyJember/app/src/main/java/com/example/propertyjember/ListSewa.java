@@ -51,10 +51,10 @@ public class ListSewa extends BaseAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.activity_listinfo,
                     null, true);
-            holder.jenis = (TextView)
+            holder.nama = (TextView)
                     convertView.findViewById(R.id.jenis);
             holder.harga = (TextView)
-                    convertView.findViewById(R.id.harga1);
+                    convertView.findViewById(R.id.harga);
             holder.alamat = (TextView)
                     convertView.findViewById(R.id.alamat);
             convertView.setTag(holder);
@@ -63,12 +63,12 @@ public class ListSewa extends BaseAdapter {
             holder = (ViewHolder)convertView.getTag();
         }
 
-        holder.jenis.setText("Jenis "+datasewaArrayList.get(position).getHarga());
+        holder.nama.setText("Jenis "+datasewaArrayList.get(position).getHarga());
         holder.harga.setText("Harga "+datasewaArrayList.get(position).getAlamat());
-        holder.alamat.setText("Alamat "+datasewaArrayList.get(position).getJenis());
+        holder.alamat.setText("Alamat "+datasewaArrayList.get(position).getNama());
         return convertView;
     }
     private class ViewHolder {
-        protected TextView jenis, harga, alamat;
+        protected TextView nama, harga, alamat;
     }
 }

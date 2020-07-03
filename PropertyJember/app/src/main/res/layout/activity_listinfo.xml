@@ -1,10 +1,37 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/background"
     tools:context=".MainActivity">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp"
+        android:elevation="0dp"
+        android:background="@color/colorPrimary" >
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            app:titleTextColor="@color/colorwhite"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:gravity="center_horizontal"
+            app:layout_scrollFlags="scroll|enterAlways">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/kembali"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Transaksi"
+                android:textColor="@color/colorwhite"
+                android:layout_gravity="center"
+                android:textSize="20dp"/>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,44 +42,35 @@
         <ImageView
             android:layout_width="match_parent"
             android:id="@+id/imageView2"
-            android:layout_height="70dp"
-            android:layout_marginTop="10dp"
-            app:srcCompat="@drawable/logo" />
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="70dp"
+            app:srcCompat="@drawable/transaksi" />
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:layout_marginLeft="10dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1"
-            android:id="@+id/jenis"
-            android:textColor="#ffffff"
-            android:text="Jenis : Rumah Tipe 36"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:id="@+id/harga1"
-            android:textColor="#ffffff"
-            android:text="Harga : Rp200.000.000"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:id="@+id/alamat"
-            android:textColor="#ffffff"
-            android:text="Alamat : Patrang"/>
-        <Button
-            android:layout_width="170dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="250dp"
             android:id="@+id/button_login"
-            android:background="#034FAD"
-            android:text="Info Detail Rumah"/>
+            android:textSize="18dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorblack"
+            android:text="Sedang Disewa"/>
+        <Button
+            android:layout_width="125dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="270dp"
+            android:textColor="@color/colorwhite"
+            android:id="@+id/button_detailpembayaran"
+            android:background="@drawable/button_register"
+            android:text="Pembayaran"/>
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -68,34 +86,162 @@
         <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ECEFF1"
+        android:background="@color/colorgray"
         android:padding="5dp">
         <TextView
             android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:id="@+id/notransaksi"
+            android:textColor="@color/colorblack"
             android:text="No" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/tglpembayaran"
-            android:text="Tanggal Pembayaran" />
+            android:id="@+id/judul"
+            android:textAlignment="center"
+            android:textColor="@color/colorblack"
+            android:text="Judul Postingan" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/harga"
-            android:text="Harga" />
+            android:id="@+id/jenis"
+            android:textAlignment="center"
+            android:textColor="@color/colorblack"
+            android:text="Jenis" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/alamat"
+                android:textAlignment="center"
+                android:textColor="@color/colorblack"
+                android:text="Alamat" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:id="@+id/status"
+                android:textAlignment="center"
+                android:textColor="@color/colorblack"
                 android:text="Status" />
     </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:text="1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Rumah 36"
+                android:textAlignment="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Rumah"
+                android:textAlignment="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Petrang"
+                android:textAlignment="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Lunas"
+                android:textAlignment="center"/>
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:text="2"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Tanah"
+                android:textAlignment="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Tanah"
+                android:textAlignment="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Kebonsari"
+                android:textAlignment="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Lunas"
+                android:textAlignment="center"/>
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:text="3"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Ruko"
+                android:textAlignment="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Ruko"
+                android:textAlignment="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Jl Mastrip"
+                android:textAlignment="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Lunas"
+                android:textAlignment="center"/>
+        </TableRow>
+<!--        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
+<!--            android:id="@+id/swipedown"-->
+<!--            android:layout_below="@id/status"-->
+<!--            android:layout_marginTop="13dp"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
+
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/recycler_view"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                />-->
+
+<!--        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
     </TableLayout>
     </LinearLayout>
     </LinearLayout>
 
-</ScrollView>
+</FrameLayout>
